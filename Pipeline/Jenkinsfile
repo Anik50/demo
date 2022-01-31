@@ -24,7 +24,7 @@ pipeline {
 
         stage('Image Remove'){
             steps{
-                sh "docker rmi anik5032/demoapp:${DOCKER_TAG}:${DOCKER_TAG}"
+                sh "docker rmi anik5032/demoapp:${DOCKER_TAG}"
             }
         }
 
