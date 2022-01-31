@@ -1,2 +1,2 @@
 #!/bin/bash
-sed "s/tagVersion/$1/g" pipeline/deployment.yaml > pipeline/deployment-tag.yaml
+sed "s/tagVersion/$1/g" Pipeline/deployment.yaml > Pipeline/deployment-tag.yaml
