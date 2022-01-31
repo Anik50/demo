@@ -30,9 +30,9 @@ pipeline {
 
         stage('Deploy to Kubernetes'){
             steps{
-                sh "chmod +x pipeline/changeTag.sh"
-                sh "pipeline/changeTag.sh ${DOCKER_TAG}"
-                sh " kubectl --kubeconfig=/root/.kube/config apply -f pipeline/deployment-tag.yaml"
+                sh "chmod +x Pipeline/changeTag.sh"
+                sh "Pipeline/changeTag.sh ${DOCKER_TAG}"
+                sh " kubectl --kubeconfig=/root/.kube/config apply -f Pipeline/deployment-tag.yaml"
             }
         }
     }
