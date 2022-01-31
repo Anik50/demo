@@ -1,0 +1,44 @@
+pipeline {
+    agent {
+        node {
+            label 'agent'
+        }
+    }
+    environment{
+        DOCKER_TAG = getDockerTag()
+    }
+
+    stages{
+
+        stage('Image Build'){
+            steps{
+                sh "docker build -f Dockerfile . -t anik5032/demoapp:${DOCKER_TAG}"
+            }
+        }
+
+        stage('Image Push'){
+            steps{
+                sh "docker push anik5032/demoapp:${DOCKER_TAG}"
+        }
+    }
+
+        stage('Image Remove'){
+            steps{
+                sh "docker rmi anik5032/demoapp:${DOCKER_TAG}:${DOCKER_TAG}"
+            }
+        }
+
+        stage('Deploy to Kubernetes'){
+            steps{
+                sh "chmod +x pipeline/changeTag.sh"
+                sh "pipeline/changeTag.sh ${DOCKER_TAG}"
+                sh " kubectl --kubeconfig=/root/.kube/config apply -f pipeline/deployment-tag.yaml"
+            }
+        }
+    }
+}
+
+def getDockerTag(){
+    def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
+}

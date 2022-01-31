@@ -1,0 +1,41 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: demoapp
+  namespace: default
+  labels:
+    k8s-app: demoapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: demoapp
+  template:
+    metadata:
+      name: demoapp
+      labels:
+        k8s-app: demoapp
+    spec:
+      containers:
+        - name: demoapp
+          image: anik5032/demoapp:tagVersion
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always    
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: demoapp
+  namespace: default
+  labels:
+    k8s-app: demoapp
+spec:
+  ports:
+    - name: tcp-8000-8000-jvv4f
+      protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30913
+  selector:
+    k8s-app: demoapp
+  type: NodePort
