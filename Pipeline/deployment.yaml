@@ -20,7 +20,9 @@ spec:
         - name: demoapp
           image: anik5032/demoapp:tagVersion
           imagePullPolicy: IfNotPresent
-      restartPolicy: Always    
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred01          
 ---
 kind: Service
 apiVersion: v1
